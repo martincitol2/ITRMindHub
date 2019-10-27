@@ -26,40 +26,12 @@ public class GamePlayer {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Date getJoinDate() {
-        return joinDate;
-    }
-
-    public void setJoinDate(Date joinDate) {
-        this.joinDate = joinDate;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public Game getGame() {
         return game;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
     public Set<Ship> getShips() {
         return ships;
-    }
-
-    public void setShips(Set<Ship> ships) {
-        this.ships = ships;
     }
 
     @OneToMany(mappedBy = "gamePlayer",fetch = FetchType.EAGER)
@@ -84,10 +56,4 @@ public class GamePlayer {
         dto.put("player",this.player.makePlayerDTO());
         return dto;
      }
-
-
-    public void addShip(Ship ship) {
-        ship.setGamePlayer(this);
-        this.ships.add(ship);
-    }
 }

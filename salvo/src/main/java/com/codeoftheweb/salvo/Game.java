@@ -26,20 +26,8 @@ public class Game {
         return creationDate;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
-    }
-
-    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
-        this.gamePlayers = gamePlayers;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 
     public long getId() {
