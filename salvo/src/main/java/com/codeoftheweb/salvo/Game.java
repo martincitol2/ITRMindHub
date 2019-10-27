@@ -26,7 +26,21 @@ public class Game {
         return creationDate;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
+
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public long getId() {
         return id;
@@ -42,7 +56,7 @@ public class Game {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
-        dto.put("gamePlayers",this.gamePlayers.stream().map(gamePlayer -> gamePlayer.makeGamePlayerDTO()).collect(Collectors.toList()));
+        dto.put("gamePlayers",this.getGamePlayers().stream().map(gamePlayer -> gamePlayer.makeGamePlayerDTO()).collect(Collectors.toList()));
         return dto;
     }
 
