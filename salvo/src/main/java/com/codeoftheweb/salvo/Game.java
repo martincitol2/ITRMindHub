@@ -3,6 +3,7 @@ package com.codeoftheweb.salvo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.security.cert.CollectionCertStoreParameters;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,6 +21,9 @@ public class Game {
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers;
 
+    @OneToMany(mappedBy = "game",fetch = FetchType.EAGER)
+    private Set<Score> scores;
+
     private Date creationDate;
 
     public Date getCreationDate() {
@@ -36,6 +40,10 @@ public class Game {
 
     public Game(){}
 
+    public Set<Score> getScores() {
+        return scores;
+    }
+
     public Game(Date creationDate){
         this.creationDate = creationDate;
     }
@@ -45,6 +53,7 @@ public class Game {
         dto.put("id", this.getId());
         dto.put("created", this.getCreationDate());
         dto.put("gamePlayers",this.getGamePlayers().stream().map(gamePlayer -> gamePlayer.makeGamePlayerDTO()).collect(Collectors.toList()));
+        dto.put("scores",this.getScores().stream().map(score -> score.makeScoreDTO()).collect(Collectors.toList()));
         return dto;
     }
 
