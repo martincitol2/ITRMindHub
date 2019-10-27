@@ -29,8 +29,7 @@ public class Ship {
         return locations;
     }
 
-    public Ship() {
-    }
+    public Ship() {}
 
     public Ship(String type, List<String> locations,GamePlayer gamePlayer) {
         this.type = type;
