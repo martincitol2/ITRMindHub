@@ -46,6 +46,15 @@ public class Game {
         this.creationDate = creationDate;
     }
 
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
+    }
+
+    public void addGamePlayer(GamePlayer gamePlayer){
+        gamePlayer.setGame(this);
+        getGamePlayers().add(gamePlayer);
+    }
+
     public Map<String, Object> makeGameDTO() {
         Map<String, Object> dto = new LinkedHashMap<String, Object>();
         dto.put("id", this.getId());

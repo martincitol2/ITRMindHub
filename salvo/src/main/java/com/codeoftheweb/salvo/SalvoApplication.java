@@ -350,10 +350,10 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				.antMatchers("/web/**").permitAll()
-				.antMatchers("/api/players").permitAll()
+				.antMatchers("/rest/**").hasAuthority("ADMIN")
+				.antMatchers("/api/game_view/**").hasAuthority("USER")
+				.antMatchers("/h2-console/**").permitAll()
 				.antMatchers("/api/games").permitAll()
-				.antMatchers("/h2-console/**").hasAuthority("ADMIN")
-				.antMatchers("/**").hasAuthority("ADMIN")
 				.and()
 				.formLogin();
 

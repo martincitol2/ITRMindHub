@@ -26,8 +26,16 @@ public class GamePlayer {
     @JoinColumn(name = "game_id")
     private Game game;
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
     public Game getGame() {
         return game;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public Set<Ship> getShips() {
