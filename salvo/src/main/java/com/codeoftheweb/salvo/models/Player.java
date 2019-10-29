@@ -47,10 +47,6 @@ public class Player {
         return gamePlayers;
     }
 
-    public Set<Score> getScores() {
-        return scores;
-    }
-
     public String getPassword() {
         return password;
     }

@@ -74,4 +74,9 @@ public class GamePlayer {
         dto.put("player",this.player.makePlayerDTO());
         return dto;
      }
+
+     public void addSalvo(Salvo salvo){
+        salvo.setGamePlayer(this);
+         getSalvos().add(salvo);
+     }
 }

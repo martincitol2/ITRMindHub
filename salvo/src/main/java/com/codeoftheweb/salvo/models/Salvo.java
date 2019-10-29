@@ -1,6 +1,4 @@
 package com.codeoftheweb.salvo.models;
-
-import com.codeoftheweb.salvo.models.GamePlayer;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -32,12 +30,15 @@ public class Salvo {
 
     public Salvo(){}
 
-    public Salvo(int turn,GamePlayer gamePlayer,List<String> locations){
+    public void setGamePlayer(GamePlayer gamePlayer) {
+        this.gamePlayer = gamePlayer;
+    }
+
+    public Salvo(int turn, GamePlayer gamePlayer, List<String> locations){
         this.gamePlayer = gamePlayer;
         this.locations = locations;
         this.turn = turn;
     }
-
 
     public GamePlayer getGamePlayer() {
         return gamePlayer;
