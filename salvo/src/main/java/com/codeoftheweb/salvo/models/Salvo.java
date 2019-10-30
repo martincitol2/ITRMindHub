@@ -22,6 +22,10 @@ public class Salvo {
     @JoinColumn(name = "gamePlayer_id")
     private GamePlayer gamePlayer;
 
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
     private int turn;
 
     public int getTurn() {
