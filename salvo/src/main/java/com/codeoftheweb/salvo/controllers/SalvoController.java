@@ -52,16 +52,46 @@ public class SalvoController {
       dto.put("gamePlayers", gamePlayer.getGame().getGamePlayers().stream().map(gamePlayer1 -> gamePlayer1.makeGamePlayerDTO()).collect(Collectors.toList()));
       dto.put("ships", gamePlayer.getShips().stream().map(ship -> ship.makeShipDTO()).collect(Collectors.toList()));
       dto.put("salvoes", gamePlayer.getGame().getGamePlayers().stream().map(gamePlayer1 -> gamePlayer1.getSalvos()).flatMap(x -> x.stream()).map(salvo -> salvo.makeSalvoDTO()).collect(Collectors.toList()));
-      dto.put("hits",hits());
+      dto.put("hits",hits(nn));
       return dto;
 
    }
-   public Map<String,Object> hits(){
+   public Map<String,Object> hits(Long gpid){
       Map<String,Object> dto = new LinkedHashMap<>();
-      dto.put("self",new ArrayList<>());
-      dto.put("opponent", new ArrayList<>());
+      GamePlayer self = getSelf(gpid);
+      GamePlayer opponent = getOponente(self);
+
+      if(opponent != null) {
+
+         dto.put("self", gamePlayerRepository.getOne(gpid)
+                 .getSalvos()
+                 .stream()
+                 .map(salvo -> salvo.getHitsDTO(self,
+                         opponent))
+                 .collect(Collectors.toList()));
+         dto.put("opponent", gamePlayerRepository
+                 .getOne(gpid)
+                 .getSalvos()
+                 .stream()
+                 .map(salvo -> salvo.getHitsDTO(opponent, self)).collect(Collectors.toList()));
+
+      }
+      else {
+         dto.put("self",new ArrayList<>());
+         dto.put("opponent",new ArrayList<>());
+      }
       return dto;
    }
+
+   public GamePlayer getSelf(Long id){
+
+      return gamePlayerRepository.findById(id).get();
+   }
+
+   public GamePlayer getOponente(GamePlayer gpSelf) {
+      return gpSelf.getGame().getGamePlayers().stream().filter(gp -> gp.getId() != gpSelf.getId()).findAny().orElse(null);
+   }
+
 
    @RequestMapping(path = "/games", method = RequestMethod.POST)
    public ResponseEntity<Map<String, Object>> newGame(Authentication authentication) {

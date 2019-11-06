@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Entity
 public class Ship {
@@ -33,9 +34,10 @@ public class Ship {
         return locations;
     }
 
-    public Ship() {}
+    public Ship() {
+    }
 
-    public Ship(String type, List<String> locations,GamePlayer gamePlayer) {
+    public Ship(String type, List<String> locations, GamePlayer gamePlayer) {
         this.type = type;
         this.locations = locations;
         this.gamePlayer = gamePlayer;
@@ -45,12 +47,13 @@ public class Ship {
         return type;
     }
 
-    public Map<String,Object> makeShipDTO(){
-        Map<String,Object> dto = new LinkedHashMap<>();
-        dto.put("type",this.getType());
-        dto.put("locations",this.getLocations());
+    public Map<String, Object> makeShipDTO() {
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("type", this.getType());
+        dto.put("locations", this.getLocations());
 
         return dto;
     }
+
 
 }
