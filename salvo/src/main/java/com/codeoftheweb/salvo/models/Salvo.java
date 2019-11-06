@@ -17,8 +17,8 @@ public class Salvo {
     private long id;
 
     @ElementCollection
-    @Column(name="location")
-    List<String> locations;
+    @Column(name="salvoLocations")
+    List<String> salvoLocations;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gamePlayer_id")
@@ -42,7 +42,7 @@ public class Salvo {
 
     public Salvo(int turn, GamePlayer gamePlayer, List<String> locations){
         this.gamePlayer = gamePlayer;
-        this.locations = locations;
+        this.salvoLocations = locations;
         this.turn = turn;
     }
 
@@ -50,15 +50,15 @@ public class Salvo {
         return gamePlayer;
     }
 
-    public List<String> getLocations() {
-        return locations;
+    public List<String> getSalvoLocations() {
+        return salvoLocations;
     }
 
     public Map<String,Object> makeSalvoDTO(){
         Map<String,Object> dto = new LinkedHashMap<>();
         dto.put("turn",this.getTurn());
         dto.put("player",this.getGamePlayer().getPlayer().getId());
-        dto.put("locations",this.getLocations());
+        dto.put("locations",this.getSalvoLocations());
 
         return dto;
     }
@@ -75,40 +75,41 @@ public class Salvo {
         Integer destroyerTotal = 0;
         Integer patrolboatTotal = 0;
         List<String> salvoLocations = new ArrayList<>();
-
+        Integer missed = 0;
        Salvo salvoe = opponent.getSalvos().stream().filter(salvo -> salvo.getTurn() == this.getTurn()).findAny().orElse(null);
-       Integer missed = salvoe.getLocations().size();
-        for (Ship ship : self.getShips()) {
+       if(salvoe != null) {
+           missed = salvoe.getSalvoLocations().size();
+           for (Ship ship : self.getShips()) {
 
-            for (String shipLocation : ship.getLocations()) {
-                if(salvoe.getLocations().contains(shipLocation)){
-                    missed--;
-                    salvoLocations.add(shipLocation);
-                    switch (ship.getType().toLowerCase()) {
-                        case "carrier":
-                            carrierPorTurno++;
-                            break;
-                        case "battleship":
-                            battleshipPorTurno++;
-                            break;
-                        case "submarine":
-                            submarinePorTurno++;
-                            break;
-                        case "destroyer":
-                            destroyerPorTurno++;
-                            break;
-                        case "patrolboat":
-                            patrolboatPorTurno++;
-                            break;
-                    }
-                }
-            }
-        }
-
+               for (String shipLocation : ship.getLocations()) {
+                   if (salvoe.getSalvoLocations().contains(shipLocation)) {
+                       missed--;
+                       salvoLocations.add(shipLocation);
+                       switch (ship.getType().toLowerCase()) {
+                           case "carrier":
+                               carrierPorTurno++;
+                               break;
+                           case "battleship":
+                               battleshipPorTurno++;
+                               break;
+                           case "submarine":
+                               submarinePorTurno++;
+                               break;
+                           case "destroyer":
+                               destroyerPorTurno++;
+                               break;
+                           case "patrolboat":
+                               patrolboatPorTurno++;
+                               break;
+                       }
+                   }
+               }
+           }
+       }
         List<String> salvoLocation = opponent
                 .getSalvos()
                 .stream()
-                .map(salvo -> salvo.getLocations())
+                .map(salvo -> salvo.getSalvoLocations())
                 .flatMap(location -> location.stream())
                 .collect(Collectors.toList());
 

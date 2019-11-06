@@ -56,6 +56,7 @@ $('#login-form').on('submit', function (event) {
                         $('#loginSuccess').show( "slow" ).delay(2500).hide( "slow" );
                         $("#username").val("");
                         $("#password").val("");
+                        $("#createGameForm").show();
                         updateJson();
 
                     })
